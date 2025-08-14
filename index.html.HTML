@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>A Special Website</title>
+    <style>
+        /* General body styling for a sky blue background */
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background: linear-gradient(135deg, #87ceeb 0%, #b0e0e6 100%);
+            color: #0f1c3a; /* Darker text for better contrast */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            text-align: center;
+            overflow: hidden; /* Prevent horizontal scroll from sparkles */
+        }
+
+        /* Container to hold the content and center it */
+        .container {
+            padding: 2rem;
+            max-width: 90%;
+            position: relative; /* Needed for positioning sparkles */
+            z-index: 1; /* Keep content above sparkles */
+        }
+
+        /* Heading styles */
+        h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            color: #0f1c3a; /* Dark text for better contrast */
+            margin: 0;
+            line-height: 1.2;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.3);
+        }
+
+        /* Button styling */
+        button {
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: #ffffff; /* White text for contrast */
+            background-color: #0f1c3a; /* Dark blue button */
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: transform 0.2s, box-shadow 0.2s;
+            margin-top: 2rem;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Styles for the dynamically created sparkles */
+        .sparkle {
+            position: absolute;
+            background-color: transparent;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: sparkle-fade-in-out 1.5s forwards;
+        }
+        
+        @keyframes sparkle-fade-in-out {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="content-container" class="container">
+        <!-- Content will be injected here by JavaScript -->
+    </div>
+
+    <script>
+        const container = document.getElementById('content-container');
+
+        // Function to create and add multiple sparkles to the page
+        function addSparkles() {
+            const sparkleColors = ['#ff69b4', '#ffd700', '#00ced1', '#ff4500', '#9370db'];
+            for (let i = 0; i < 50; i++) {
+                const sparkle = document.createElement('div');
+                sparkle.classList.add('sparkle');
+                const size = Math.random() * 8 + 2; // Sparkle size between 2px and 10px
+                sparkle.style.width = `${size}px`;
+                sparkle.style.height = `${size}px`;
+                sparkle.style.top = `${Math.random() * 100}vh`;
+                sparkle.style.left = `${Math.random() * 100}vw`;
+                sparkle.style.backgroundColor = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+                
+                // Animate sparkles
+                const delay = Math.random() * 2;
+                sparkle.style.animationDelay = `${delay}s`;
+
+                document.body.appendChild(sparkle);
+                
+                // Remove sparkles after they fade out to keep the DOM clean
+                setTimeout(() => {
+                    sparkle.remove();
+                }, (1.5 + delay) * 1000);
+            }
+        }
+
+        // Function to display the first page
+        function showPage1() {
+            container.innerHTML = `
+                <h1>CLICK BELOW 🥴</h1>
+                <button onclick="showPage2()">CLICK ON ME</button>
+            `;
+        }
+
+        // Function to display the second page with sparkles
+        function showPage2() {
+            container.innerHTML = `
+                <div class="sparkle-container">
+                    <h1>HAPPY BIRTHDAY AMAR</h1>
+                </div>
+                <button onclick="showPage3()">Next</button>
+            `;
+            addSparkles(); // Call the function to add sparkles
+        }
+
+        // Function to display the third page
+        function showPage3() {
+            container.innerHTML = `
+                <h1>HEY U GOING TO BE BALD SOON</h1>
+                <button onclick="showPage4()">CLICK ME</button>
+            `;
+        }
+
+        // Function to display the final page
+        function showPage4() {
+            container.innerHTML = `
+                <h1>🎂 Have an amazing day, Amar! 🎂</h1>
+            `;
+        }
+
+        // Start with the first page when the website loads
+        window.onload = showPage1;
+    </script>
+</body>
+</html>
